@@ -10,6 +10,7 @@ async function main() {
   var io = require('socket.io')(http);
   var express = require('express');
   var fs = require('fs');
+  const Json2csvParser = require("json2csv").Parser;
   const {MongoClient} = require('mongodb');
   const uri = "mongodb+srv://gpeterson:X4CCPcfnMbJ1ZQN6@cluster0-pt6fc.mongodb.net/lab5?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
@@ -47,18 +48,38 @@ async function main() {
           })
         })
       });
+      socket.on('export', function(format) {
+        client.db().collections(function(err, collections) {
+          if(collections.length) {
+            collections[0].find().toArray(function(err,docs) {
+              console.log(docs);
+              if(format == 'json') {
+                fs.writeFile('public/peterg4-lab5.json', JSON.stringify(docs), function (err) {
+                  if (err) return console.log(err);
+                });
+              } else {
+                const json2csvParser = new Json2csvParser({ header: true });
+                const csvData = json2csvParser.parse(docs);
+     //           console.log(csv.data);
+                fs.writeFile('public/peterg4-lab5.csv', csvData, function (err) {
+                  if (err) return console.log(err);
+                });
+              }
+            })
+          }
+      });
+     });
     });
     app.get('/read', function(req, res) {
       client.db().collections(function(err, collections) {
-        collections[0].find().toArray(function(err,docs) {
-          console.log(docs);
-          res.json({data: docs})
-        })
+        if(collections.length) {
+          collections[0].find().toArray(function(err,docs) {
+            console.log(docs);
+            res.json({data: docs})
+          })
+        }
       });
     });
-  /*  socket.on('export', function(format) {
-      //export
-    });*/
 
     app.use(express.static('public'));
     // start server

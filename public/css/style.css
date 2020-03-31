@@ -28,11 +28,55 @@ input[type=text] {
 .dropdown {
     width: 10%;
 }
+.dropdown:focus {
+    outline: 0;
+}
 #right-but{
+    margin: 0;
     border-radius: 0px 15px 15px 0px;
     width: 10%;
+    height: 46px;
 }
 #view{
     margin: 0 auto;
     width: 900px;
 }
+
+button { 
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    background-color: white;
+    border-style: none;
+    color: #282c34;
+    border-radius: 20px;
+    width: auto;
+    padding: 5px 20px 5px 20px;
+    height: 40px;
+    margin: 10px;
+    cursor: pointer;
+  
+  }
+  button:hover {
+    box-shadow:
+    1px 1px #53a7ea,
+    2px 2px #53a7ea,
+    3px 3px #53a7ea;
+    -webkit-transform: translateX(-3px);
+    transform: translateX(-3px);
+  }
+  button:focus{
+    outline: none;
+  }
+  .export {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    background-color: white;
+    border-style: none;
+    color: #282c34;
+    border-radius: 20px;
+    width: auto;
+    padding: 5px 20px 5px 20px;
+    height: 40px;
+    margin: 10px;
+    cursor: pointer;
+  }

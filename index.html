@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" ng-app="app">
   <head>
-    <title>Lab 5</title>
+    <title>Pix</title>
   </head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -15,12 +15,12 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/front.js"></script>
   
-  <body ng-controller="controller">
+  <body ng-controller="controller" ng-init="read()">
     <div class="container center">
       <div class="pb-2 mt-4 mb-4 border-bottom center">
         <h1>Search images:</h1>
         <p>Search for images to append to the Database, then hit the "Read" button to output it to the page!</p>
-        <p><button ng-click="read()">Read</button> <button ng-click="reset()">Reset</button> <select ng-model = "export" ng-options="x for x in exports"></select> <button>Export</button><p>
+        <p><button ng-click="read()">Read</button> <button ng-click="reset()">Reset</button> <select class="export" ng-model = "format" ng-options="x for x in exports"></select> <button ng-click="export(format)">Export</button><p>
       </div>
 
       <form ng-submit="search()" class="form-horizontal center mt-2 center">

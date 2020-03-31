@@ -5,6 +5,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "follow-redirects": "^1.10.0",
+    "json2csv": "^5.0.0",
     "mongodb": "^3.5.5",
     "mongoose": "^3.8.24",
     "node-fetch": "^2.6.0",
