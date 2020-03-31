@@ -1,0 +1,33 @@
+body{
+    background-color: #333333;
+    color: ivory;
+}
+#chart_div{
+    width: 100%;
+    min-height: 500px;
+    margin: 0 auto;
+}
+.center{
+    margin: 0 auto;
+}
+input[type=text] {
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    text-align: left;
+    font-size: 16px;
+    background-image: url('https://www.w3schools.com/howto/searchicon.png');
+    background-position: 12px 8px; 
+    background-repeat: no-repeat;
+    background-color: white;
+    padding: 12px 20px 12px 40px;
+    transition: width 0.4s ease-in-out;
+}
+
+@media only screen and (max-device-width: 700px) {
+    .portable{
+        margin-bottom: 3px;
+        width: 100%;
+        flex-basis: 100%;
+    }
+}

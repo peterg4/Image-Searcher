@@ -1,0 +1,38 @@
+body{
+    background-color: #333333;
+    color: ivory;
+}
+.center{
+    margin: 0 auto;
+}
+input[type=text] {
+    box-sizing: border-box;
+    border-radius: 15px 0px 0px 15px;
+    border-left: 2px solid #ccc;
+    border-top: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    text-align: left;
+    font-size: 16px;
+    padding: 12px 20px 12px 12px;
+    height: 46px;
+    width: 80%;
+}
+.left {
+    float: left;
+}
+.tall {
+    height: 46px;
+    border-radius: 0px;
+    width: 100%;
+}
+.dropdown {
+    width: 10%;
+}
+#right-but{
+    border-radius: 0px 15px 15px 0px;
+    width: 10%;
+}
+#view{
+    margin: 0 auto;
+    width: 900px;
+}
