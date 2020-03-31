@@ -14,12 +14,6 @@ async function main() {
   const uri = "mongodb+srv://gpeterson:X4CCPcfnMbJ1ZQN6@cluster0-pt6fc.mongodb.net/lab5?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
   var data;
- /* async function listDatabases(client){
-    databasesList = await client.db().admin().listDatabases();
-    console.log("Databases:");
-    console.log(clusters);
-    databasesList.databases.forEach(db => console.log(db));
-  };*/
 
   try {
     //connect cluster
@@ -41,17 +35,31 @@ async function main() {
         fetch(url, settings)
           .then(res => res.json())
           .then((json) => {
-            console.log(json.results);
             client.db().createCollection("data", {capped: false, w:1}, function(err, collection) {
               collection.insert({data: json.results}, {w:1});
             });
-            fs.writeFile('public/data.json', JSON.stringify(json.results), function (err) {
-              if (err) return console.log(err);
-              socket.emit('response');
-            });
           });
       });
+      socket.on('reset', function() {
+        client.db().collections(function(err, collections) {
+          collections.forEach(function(collection) {
+            collection.drop();
+          })
+        })
+      });
     });
+    app.get('/read', function(req, res) {
+      client.db().collections(function(err, collections) {
+        collections[0].find().toArray(function(err,docs) {
+          console.log(docs);
+          res.json({data: docs})
+        })
+      });
+    });
+  /*  socket.on('export', function(format) {
+      //export
+    });*/
+
     app.use(express.static('public'));
     // start server
     http.listen(3000, function(){
