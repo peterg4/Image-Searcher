@@ -11,23 +11,19 @@ async function main() {
   var express = require('express');
   var fs = require('fs');
   const {MongoClient} = require('mongodb');
-  const uri = "mongodb+srv://gpeterson:X4CCPcfnMbJ1ZQN6@cluster0-pt6fc.mongodb.net/test?retryWrites=true&w=majority";
+  const uri = "mongodb+srv://gpeterson:X4CCPcfnMbJ1ZQN6@cluster0-pt6fc.mongodb.net/lab5?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
   var data;
-  async function listDatabases(client){
+ /* async function listDatabases(client){
     databasesList = await client.db().admin().listDatabases();
-    clusters = await client.db().collections();
-
     console.log("Databases:");
     console.log(clusters);
     databasesList.databases.forEach(db => console.log(db));
-  };
+  };*/
 
   try {
     //connect cluster
     await client.connect();
-    //make db call
-    await listDatabases(client);
 
   } catch (e) {
     console.error(e);
@@ -46,6 +42,9 @@ async function main() {
           .then(res => res.json())
           .then((json) => {
             console.log(json.results);
+            client.db().createCollection("data", {capped: false, w:1}, function(err, collection) {
+              collection.insert({data: json.results}, {w:1});
+            });
             fs.writeFile('public/data.json', JSON.stringify(json.results), function (err) {
               if (err) return console.log(err);
               socket.emit('response');
