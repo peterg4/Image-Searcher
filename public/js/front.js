@@ -6,9 +6,10 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.items=[];
   $scope.lookup;
   $scope.item_count=[5,10,20];
-  $scope.format = 'json';
-  $scope.exports = ['json','CSV'];
+  $scope.format = 'JSON';
+  $scope.exports = ['JSON','CSV'];
   $scope.count = 5;
+  $scope.currid = 'home';
   $scope.search = function(){
     $scope.items=[];
     $scope.package=[];
@@ -33,5 +34,10 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.export = function(format) {
     console.log(format);
     socket.emit('export', format);
+  }
+  $scope.changeActive = function(id) {
+    document.getElementById($scope.currid).className = 'nav-link';
+    document.getElementById(id).className = 'nav-link active';
+    $scope.currid = id;
   }
 }]);

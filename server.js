@@ -60,7 +60,6 @@ async function main() {
               } else {
                 const json2csvParser = new Json2csvParser({ header: true });
                 const csvData = json2csvParser.parse(docs);
-     //           console.log(csv.data);
                 fs.writeFile('public/peterg4-lab5.csv', csvData, function (err) {
                   if (err) return console.log(err);
                 });
@@ -86,6 +85,5 @@ async function main() {
     http.listen(3000, function(){
       console.log('Server up on *:3000');
     });
-   // await client.close();
   }
 }

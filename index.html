@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" ng-app="app">
   <head>
-    <title>Pix</title>
+    <title>Pix | Free Stock Images</title>
   </head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -29,41 +29,34 @@
           <a class="nav-link active" id="home" ng-click="view=0;changeActive('home')" href="#">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#one">Leaderboards</a>
+            <a class="nav-link" id="explore" ng-click="view=0;changeActive('explore')" href="#one">Explore</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#three">Champions</a>
+          <a class="nav-link" id="collections" ng-click="view=0;changeActive('collections')" href="#three">Collections</a>
           </li>
         <li class="nav-item">
-          <a class="nav-link" href="#three">Synergies</a>
+          <a class="nav-link" id="wallpapers" ng-click="view=0;changeActive('wallpapers')" href="#three">Wallpapers</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#three">Items</a>
+          <a class="nav-link" id="upload" ng-click="view=0;changeActive('upload')" href="#three">Upload</a>
         </li>
       </ul>
       <form ng-submit ="search_(name)" class="form-inline my-2 my-lg-0 right">
-          <input  class="form-control" ng-model="name" type="text" placeholder="Search" aria-label="Search">
-        </form>
+          <button  type="submit">Login</button>
+      </form>
       </div>
     </nav>
 
     <div class="container panel center">
       <div class="pb-2 mt-4 mb-4 border-bottom center">
-        <h1>Search images:</h1>
-        <p>Search for images to append to the Database, then hit the "Read" button to output it to the page!</p>
+        <form ng-submit="search()" class="form-horizontal center mt-2 center">
+          <div  ng-submit="search()" class="search">
+            <button class="search_left"><svg version="1.1" viewBox="0 0 64 64" width="32" height="32" aria-hidden="false"><path d="M31 28.64l-7.57-7.57a12.53 12.53 0 1 0-2.36 2.36l7.57 7.57zm-17.5-6a9.17 9.17 0 1 1 6.5-2.64 9.11 9.11 0 0 1-6.5 2.67z"></path></svg></button>
+            <input type="text" ng-model="lookup" name="lookup" placeholder="Search free high-resolution photos">
+          </div>
+        </form>
         <p><button ng-click="read()">Read</button> <button ng-click="reset()">Reset</button> <select class="export" ng-model = "format" ng-options="x for x in exports"></select> <button ng-click="export(format)">Export</button><p>
       </div>
-
-      <form ng-submit="search()" class="form-horizontal center mt-2 center">
-        <div  ng-submit="search()" class="input-group mb-3 center">
-          <input type="text" ng-model="lookup" name="lookup" placeholder="Search by keyword">
-          <div class="dropdown left">
-            <select class="btn btn-secondary tall" ng-model="count" ng-options="x for x in item_count">
-            </select>
-          </div>
-          <button type="submit" id="right-but" value="Submit" class="btn btn-primary">Add</button>
-        </div>
-      </form>
       <div id="view">
       <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb-4 center" alt="">
     </div>
