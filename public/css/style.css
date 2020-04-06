@@ -1,9 +1,61 @@
 body{
-    background-color: #333333;
-    color: ivory;
+    background-color: #f6f6f6;
+    color: #141414;
 }
-.center{
+.container1{
+    width: 20%;
     margin: 0 auto;
+}
+nav {
+    color: #141414;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,.08);
+}
+.nav-link {
+    color: #141414!important;  
+}
+.nav-item {
+    padding-left: 2rem;
+    font-size: 1.1em;
+}
+#navbarsExampleDefault{
+    width: auto;
+    margin: 0 auto;
+}
+.right {
+    float: right;
+}
+.navbar-brand{
+    margin-left: 25px;
+}
+.navbar{
+    min-height: 65px;
+}
+.mr-auto{
+    margin-left: auto;
+}
+.form-control{
+    margin-right: 25px;
+}
+input[type=text] {
+    background-color: white;
+    background-repeat: no-repeat;
+}
+input[type=text]:focus {
+    outline: none!important;
+    outline-style:none;
+    box-shadow:none;
+    border-color: #ced4da;
+}
+.panel{
+    border: 1px solid #bcbcbc;
+    width: 80%;
+    padding-left: 14px;
+    padding-right: 14px;
+    margin-top: 85px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
 }
 input[type=text] {
     box-sizing: border-box;

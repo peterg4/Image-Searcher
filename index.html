@@ -14,9 +14,40 @@
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/front.js"></script>
+  <link rel="icon" type="image/png" href="favicon.png" />
   
   <body ng-controller="controller" ng-init="read()">
-    <div class="container center">
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+      <a class="navbar-brand" href="#"><img src="favicon.png" height="27" width="27"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link active" id="home" ng-click="view=0;changeActive('home')" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#one">Leaderboards</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#three">Champions</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#three">Synergies</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#three">Items</a>
+        </li>
+      </ul>
+      <form ng-submit ="search_(name)" class="form-inline my-2 my-lg-0 right">
+          <input  class="form-control" ng-model="name" type="text" placeholder="Search" aria-label="Search">
+        </form>
+      </div>
+    </nav>
+
+    <div class="container panel center">
       <div class="pb-2 mt-4 mb-4 border-bottom center">
         <h1>Search images:</h1>
         <p>Search for images to append to the Database, then hit the "Read" button to output it to the page!</p>
