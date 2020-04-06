@@ -43,6 +43,8 @@ nav {
 .search{
     display: flex;
     position: relative;
+    margin: 25px auto;
+    max-width: 929px;
 }
 .search_left{
     border: none;
