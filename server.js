@@ -12,7 +12,7 @@ async function main() {
   var fs = require('fs');
   const Json2csvParser = require("json2csv").Parser;
   const {MongoClient} = require('mongodb');
-  const uri = "mongodb+srv://gpeterson:X4CCPcfnMbJ1ZQN6@cluster0-pt6fc.mongodb.net/lab5?retryWrites=true&w=majority";
+  const uri = "mongodb+srv://gpeterson:X4CCPcfnMbJ1ZQN6@cluster0-pt6fc.mongodb.net/lab6?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
   var data;
 

@@ -31,11 +31,11 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       console.log(data);
       var index = data.data.data.length-1;
       for(var i = 0; i < data.data.data[index].data.length; i++) {
-        if(i < 5)
+        if(i % 4 == 0)
           $scope.items.push(data.data.data[index].data[i].urls.regular);
-        else if(i >=5 && i < 10)
+        else if(i % 3 == 0)
           $scope.items2.push(data.data.data[index].data[i].urls.regular);
-        else if(i >=10 && i < 15)
+        else if(i % 2 == 0)
           $scope.items3.push(data.data.data[index].data[i].urls.regular);
         else
           $scope.items4.push(data.data.data[index].data[i].urls.regular);
