@@ -37,12 +37,10 @@
         <li class="nav-item">
           <a class="nav-link" id="wallpapers" ng-click="view=0;changeActive('wallpapers')" href="#three">Wallpapers</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" id="upload" ng-click="view=0;changeActive('upload')" href="#three">Upload</a>
-        </li>
+          <button id="upload" ng-click="view=0;changeActive('upload')" href="#three">Upload</button>
       </ul>
       <form ng-submit ="search_(name)" class="form-inline my-2 my-lg-0 right">
-          <button  type="submit">Login</button>
+          <a href="#" class="nav-link">Sign Up</a>| <button class="login" type="submit">Login</button>
       </form>
       </div>
     </nav>
@@ -55,7 +53,11 @@
             <input type="text" ng-model="lookup" name="lookup" placeholder="Search free high-resolution photos">
           </div>
         </form>
-        <p><button ng-click="read()">Read</button> <button ng-click="reset()">Reset</button> <select class="export" ng-model = "format" ng-options="x for x in exports"></select> <button ng-click="export(format)">Export</button><p>
+        <div class="container text-center">
+          <button ng-click="read()">Read</button> <button ng-click="reset()">Reset</button> 
+          <select class="export" ng-model = "format" ng-options="x for x in exports"></select> 
+          <button ng-click="export(format)">Export</button>
+        </div>
       </div>
       <div id="view">
       <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb-4 center" alt="">
