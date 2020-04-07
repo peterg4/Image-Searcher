@@ -8,10 +8,9 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.items3=[];
   $scope.items4=[];
   $scope.lookup;
-  $scope.item_count=[5,10,20];
   $scope.format = 'JSON';
   $scope.exports = ['JSON','CSV'];
-  $scope.count = 20;
+  $scope.count = 25;
   $scope.currid = 'home';
   $scope.view = 0;
   $scope.username;
