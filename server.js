@@ -19,7 +19,6 @@ async function main() {
   try {
     //connect cluster
     await client.connect();
-
   } catch (e) {
     console.error(e);
   } finally {
@@ -36,8 +35,8 @@ async function main() {
         fetch(url, settings)
           .then(res => res.json())
           .then((json) => {
-            client.db().createCollection("data", {capped: false, w:1}, function(err, collection) {
-              collection.insert({data: json.results}, {w:1});
+            client.db().collection("data", {capped: false, w:1}, function(err, collection) {
+              collection.insertOne({data: json.results}, {w:1});
             });
           });
       });
@@ -66,17 +65,22 @@ async function main() {
               }
             })
           }
+        });
       });
-     });
+      socket.on('register', function(package) {
+        console.log(package);
+        client.db().collection('users', function(err, collection){
+          if(err) console.log(err);
+          else collection.insertOne({username: package[0], pwd: package[1]}, {w:1});
+        })
+      });
     });
     app.get('/read', function(req, res) {
-      client.db().collections(function(err, collections) {
-        if(collections.length) {
-          collections[0].find().toArray(function(err,docs) {
+      client.db().collection('data', function(err, collection) {
+          collection.find().toArray(function(err,docs) {
             console.log(docs);
-            res.json({data: docs})
-          })
-        }
+            res.json({data: docs});
+        });
       });
     });
 

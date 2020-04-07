@@ -55,4 +55,9 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     document.getElementById(id).className = 'nav-link active';
     $scope.currid = id;
   }
+  $scope.register = function() {
+    var package = ['test', 'pass'];
+    console.log('register', package);
+    socket.emit('register', package);
+  }
 }]);
