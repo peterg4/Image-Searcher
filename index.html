@@ -60,7 +60,21 @@
         </div>
       </div>
       <div id="view">
-      <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb-4 center" alt="">
+      <div class="row">
+        <div class="column">
+          <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb-4 center" alt="">
+        </div>
+        <div class="column">
+          <img ng-src={{item}} ng-repeat="item in items2" class="img-fluid mb-4 center" alt="">
+        </div>
+        <div class="column">
+          <img ng-src={{item}} ng-repeat="item in items3" class="img-fluid mb-4 center" alt="">
+        </div>
+        <div class="column">
+          <img ng-src={{item}} ng-repeat="item in items4" class="img-fluid mb-4 center" alt="">
+        </div>
+      </div>
+    <!--  <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb-4 center" alt=""> -->
     </div>
   </body>
 </html>

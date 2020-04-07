@@ -4,11 +4,14 @@ var app = angular.module("app", []);
 // Here is the Javascript for our controller which we linked (scoped) to the body tag
 app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.items=[];
+  $scope.items2=[];
+  $scope.items3=[];
+  $scope.items4=[];
   $scope.lookup;
   $scope.item_count=[5,10,20];
   $scope.format = 'JSON';
   $scope.exports = ['JSON','CSV'];
-  $scope.count = 5;
+  $scope.count = 20;
   $scope.currid = 'home';
   $scope.search = function(){
     $scope.items=[];
@@ -19,11 +22,23 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     socket.emit('lookup', $scope.package);
   }
   $scope.read = function(){
-    $scope.items = []; 
+    $scope.items=[];
+    $scope.items2=[];
+    $scope.items3=[];
+    $scope.items4=[];
+    
     $http.get("/read").then(function(data) {
+      console.log(data);
       var index = data.data.data.length-1;
       for(var i = 0; i < data.data.data[index].data.length; i++) {
-        $scope.items.push(data.data.data[index].data[i].urls.raw);
+        if(i < 5)
+          $scope.items.push(data.data.data[index].data[i].urls.regular);
+        else if(i >=5 && i < 10)
+          $scope.items2.push(data.data.data[index].data[i].urls.regular);
+        else if(i >=10 && i < 15)
+          $scope.items3.push(data.data.data[index].data[i].urls.regular);
+        else
+          $scope.items4.push(data.data.data[index].data[i].urls.regular);
       }
     });
   }
