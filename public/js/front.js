@@ -13,6 +13,9 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.exports = ['JSON','CSV'];
   $scope.count = 20;
   $scope.currid = 'home';
+  $scope.view = 0;
+  $scope.username;
+  $scope.password
   $scope.search = function(){
     $scope.items=[];
     $scope.package=[];
@@ -56,7 +59,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $scope.currid = id;
   }
   $scope.register = function() {
-    var package = ['test', 'pass'];
+    var package = [$scope.username, $scope.password];
     console.log('register', package);
     socket.emit('register', package);
   }
