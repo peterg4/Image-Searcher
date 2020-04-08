@@ -74,6 +74,20 @@ async function main() {
           else collection.insertOne({username: package[0], pwd: package[1]}, {w:1});
         })
       });
+      socket.on('login', function(package){
+        console.log(package);
+        client.db().collection('users', function(err, collection){
+          if(err) console.log(err);
+          else 
+            collection.findOne({username: package[0], pwd: package[1]}, function(err, res){
+              if(err) console.log(err)
+              else { 
+                console.log(res);
+                socket.emit('user_return', res);
+              }
+            });
+        })
+      });
     });
     app.get('/read', function(req, res) {
       client.db().collection('data', function(err, collection) {

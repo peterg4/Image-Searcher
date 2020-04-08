@@ -16,6 +16,8 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.username;
   $scope.password;
   $scope.class="show";
+  $scope.userdata = 0;
+  $scope.logged = 0;
   $scope.search = function(){
     $scope.items=[];
     $scope.package=[];
@@ -61,5 +63,25 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     console.log('register', package);
     socket.emit('register', package);
   }
-  
+  $scope.login = function() {
+    var package = [$scope.username, $scope.password];
+    console.log(package);
+    socket.emit('login', package);
+    socket.on('user_return', function(data) {
+      $scope.userdata = data;
+      if(data) {
+        $scope.logged = 1; 
+        console.log($scope.logged);
+        $scope.$apply(function () {
+          $scope.userdata = data;
+          $scope.logged = 1;
+        })
+      }
+      console.log($scope.userdata);
+    });
+  }
+  $scope.logout = function() {
+    $scope.logged = 0;
+    $scope.userdata = 0;
+  }
 }]);

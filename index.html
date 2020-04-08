@@ -39,13 +39,13 @@
         </li>
           <button id="upload" data-toggle="modal" data-target="#register" href="#three">Upload</button>
       </ul>
-      <form class="form-inline my-2 my-lg-0 right">
-          <a href="#" ng-if="!username" data-toggle="modal" data-target="#register" class="nav-link">Sign Up</a>| <button class="login" type="submit">Login</button>
-      </form>
+      <div class="form-inline my-2 my-lg-0 right">
+          <a href="#" data-toggle="modal" data-target="#register" class="nav-link">Sign Up</a>| <button class="login" ng-if="!logged" data-toggle="modal" data-target="#login">Log in</button><button class="login" ng-if="logged" ng-click="logout()">Log Out</button>
+      </div>
       </div>
     </nav>
 
-    <!--Login Modal-->
+    <!--Register Modal-->
     <div class="modal fade" id="register" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -63,6 +63,30 @@
           </div>
           <div class="modal-footer">
             <button type="button" ng-click="register()" data-dismiss="modal">Register</button>
+            <button type="button" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Login Modal-->
+    <div class="modal fade" id="login" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Welcome back to Pix!</h5>
+            <button type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form ng-submit="register()" class="form-inline my-2 my-lg-0">
+              <input class="register" type="text" placeholder="Username" ng-model="username" name="username">
+              <input class="register" type="password" placeholder="Password" ng-model="password" name="password">
+          </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" ng-click="login()" data-dismiss="modal">Log in</button>
             <button type="button" data-dismiss="modal">Close</button>
           </div>
         </div>
