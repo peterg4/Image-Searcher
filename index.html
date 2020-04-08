@@ -140,13 +140,28 @@
         </div>
       <div class="row">
         <div class="column" infinite-scroll="newExplore()" infinite-scroll-distance="3">
-          <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb- animated" alt="">
+          <div class="img_container" ng-repeat="item in items">
+            <img ng-src={{item}} class="img-fluid mb- animated image" alt="">
+            <div class="middle">
+              <div class="text">John Doe</div>
+            </div>
+          </div>
         </div>
         <div class="column">
-          <img ng-src={{item}} ng-repeat="item in items2" class="img-fluid mb- animated" alt="">
+          <div class="img_container" ng-repeat="item in items2">
+            <img ng-src={{item}} class="img-fluid mb- animated image" alt="">
+            <div class="middle">
+              <div class="text">John Doe</div>
+            </div>
+          </div>
         </div>
         <div class="column">
-          <img ng-src={{item}} ng-repeat="item in items3" class="img-fluid mb- animated" alt="">
+          <div class="img_container" ng-repeat="item in items3">
+            <img ng-src={{item}} class="img-fluid mb- animated image" alt="">
+            <div class="middle">
+              <div class="text">John Doe</div>
+            </div>
+          </div>
         </div>
       </div>
 
