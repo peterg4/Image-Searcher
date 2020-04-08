@@ -87,7 +87,7 @@ input[type=text]:focus, input[type=password]:focus {
 }
 .panel{
     border: 1px solid #bcbcbc;
-    width: 80%;
+    width: 90%;
     padding-left: 14px;
     padding-right: 14px;
     margin-top: 85px;
