@@ -1,13 +1,17 @@
 // load socket.io-client
 var socket = io();
-var app = angular.module("app", []);
+var app = angular.module("app", ['infinite-scroll']);
+
 // Here is the Javascript for our controller which we linked (scoped) to the body tag
 app.controller("controller", ['$scope','$http',function($scope, $http) {
+  
+  var scr = document.getElementsByTagName("BODY")[0];
+  var intElemScrollTop = scr.scrollTop;
+  console.log(intElemScrollTop);
   $scope.items=[];
   $scope.items2=[];
   $scope.items3=[];
-  $scope.items4=[];
-  $scope.lookup;
+  $scope.keyword;
   $scope.format = 'JSON';
   $scope.exports = ['JSON','CSV'];
   $scope.count = 25;
@@ -19,18 +23,46 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.userdata = 0;
   $scope.logged = 0;
   $scope.target = '#login';
-  $scope.search = function(){
-    $scope.items=[];
-    $scope.package=[];
-    $scope.package.push($scope.lookup);
-    $scope.package.push($scope.count);
-    console.log($scope.package);
-    socket.emit('lookup', $scope.package);
-    $http.get("/lookup?keyword="+$scope.lookup).then(function(data) {
+  $scope.page_count = 1;
+
+  $scope.search = function(keyword){
+    var package = [$scope.count, keyword];
+    console.log(package);
+    socket.emit('lookup', package);
+    $http.get("/lookup?keyword="+package[1]).then(function(data) {
       $scope.items=[];
       $scope.items2=[];
       $scope.items3=[];
-      $scope.items4=[];
+      console.log(data);
+      for(var i = 0; i < data.data.data.length; i++) {
+        if((i+1) % 3 == 0)
+          $scope.items.push(data.data.data[i].urls.small);
+        else if((i+1) % 2 == 0)
+          $scope.items2.push(data.data.data[i].urls.small);
+        else if((i+1) % 1 == 0)
+          $scope.items3.push(data.data.data[i].urls.small);
+      }
+    });
+  }
+  $scope.explore = function() {
+    $scope.items=[];
+    $scope.items2=[];
+    $scope.items3=[];
+    $http.get("/explore?page=1").then(function(data) {
+      console.log(data);
+      for(var i = 0; i < data.data.data.length; i++) {
+        if((i+1) % 3 == 0)
+          $scope.items.push(data.data.data[i].urls.small);
+        else if((i+1) % 2 == 0)
+          $scope.items2.push(data.data.data[i].urls.small);
+        else if((i+1) % 1 == 0)
+          $scope.items3.push(data.data.data[i].urls.small);
+      }
+    });
+  }
+  $scope.newExplore = function() {
+    $scope.page_count++;
+    $http.get("/explore?page="+$scope.page_count).then(function(data) {
       console.log(data);
       for(var i = 0; i < data.data.data.length; i++) {
         if((i+1) % 3 == 0)
@@ -46,7 +78,6 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $scope.items=[];
     $scope.items2=[];
     $scope.items3=[];
-    $scope.items4=[];
     
     $http.get("/read").then(function(data) {
       console.log(data);
@@ -65,7 +96,6 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $scope.items=[];
     $scope.items2=[];
     $scope.items3=[];
-    $scope.items4=[];
     socket.emit('reset');
   }
   $scope.export = function(format) {

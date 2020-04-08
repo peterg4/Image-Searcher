@@ -51,7 +51,6 @@ async function main() {
         client.db().collections(function(err, collections) {
           if(collections.length) {
             collections[0].find().toArray(function(err,docs) {
-              console.log(docs);
               if(format == 'json') {
                 fs.writeFile('public/peterg4-lab5.json', JSON.stringify(docs), function (err) {
                   if (err) return console.log(err);
@@ -92,21 +91,29 @@ async function main() {
     app.get('/read', function(req, res) {
       client.db().collection('data', function(err, collection) {
           collection.find().toArray(function(err,docs) {
-            console.log(docs);
             res.json({data: docs});
         });
       });
     });
     app.get('/lookup', function(req, res) {
+      console.log(req.query.keyword);
       let url = 'https://api.unsplash.com/search/photos?per_page=25&query='+req.query.keyword+'&client_id=cb74d8278199920f87f738071a4b5957f92c83d2704aa72f0ea8f0fd04564f65';
       let settings = { method: "Get" };
       fetch(url, settings)
         .then(res => res.json())
         .then((json) => {
-          console.log(json.results);
           res.json({data: json.results});
       });
     });
+    app.get('/explore', function(req, res) {
+      let url = 'https://api.unsplash.com/photos?page='+req.query.page+'&per_page=30&client_id=cb74d8278199920f87f738071a4b5957f92c83d2704aa72f0ea8f0fd04564f65';
+      let settings = { method: "Get" };
+      fetch(url, settings)
+        .then(res => res.json())
+        .then((json) => {
+          res.json({data: json});
+      });
+    })
 
     app.use(express.static('public'));
     // start server

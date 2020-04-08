@@ -4,11 +4,13 @@
     <title>Pix | Free Stock Images</title>
   </head>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>  
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://unpkg.com/unsplash@latest/uh.js" ></script>
+  <script type='text/javascript' src='js/ng-infinite-scroll/build/ng-infinite-scroll.min.js'></script>
   <link rel="stylesheet" type = "text/css" href="/css/style.css">
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -16,10 +18,10 @@
   <script src="/js/front.js"></script>
   <link rel="icon" type="image/png" href="favicon.png" />
   
-  <body ng-controller="controller" ng-init="read()">
+  <body ng-controller="controller" ng-onscroll="checkLoad()" ng-init="read()">
     <!--Navbar-->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
-      <a class="navbar-brand" href="#"><img src="favicon.png" height="27" width="27"></a>
+      <a class="navbar-brand" href="#"><img src="favicon.png" height="27" width="27"> Pix</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -29,13 +31,13 @@
           <a class="nav-link active" id="home" ng-click="view=0;changeActive('home')" href="#">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="explore" ng-click="view=0;changeActive('explore')" href="#">Explore</a>
+            <a class="nav-link" id="explore" ng-click="view=1;changeActive('explore');explore()" href="#">Explore</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="collections" ng-click="view=0;changeActive('collections')" href="#">Collections</a>
+          <a class="nav-link" id="collections" ng-click="view=2;changeActive('collections')" href="#">Collections</a>
           </li>
         <li class="nav-item">
-          <a class="nav-link" id="wallpapers" ng-click="view=0;changeActive('wallpapers')" href="#">Wallpapers</a>
+          <a class="nav-link" id="wallpapers" ng-click="view=3;changeActive('wallpapers')" href="#">Wallpapers</a>
         </li>
           <button id="upload" data-toggle="modal" data-target="{{target}}">Upload</button>
       </ul>
@@ -117,34 +119,36 @@
       </div>
     </div>
 
-    <!--Body-->
+    <!--Home-->
     <div class="panel center">
-      <div class="pb-2 mt-4 mb-4 border-bottom center">
-        <form ng-submit="search()" class="form-horizontal center mt-2 center">
-          <div  ng-submit="search()" class="search">
-            <button class="search_left"><svg version="1.1" viewBox="0 0 64 64" width="32" height="32" aria-hidden="false"><path d="M31 28.64l-7.57-7.57a12.53 12.53 0 1 0-2.36 2.36l7.57 7.57zm-17.5-6a9.17 9.17 0 1 1 6.5-2.64 9.11 9.11 0 0 1-6.5 2.67z"></path></svg></button>
-            <input type="text" ng-model="lookup" name="lookup" placeholder="Search free high-resolution photos">
+      <div ng-if="view==0" class="pb-2 mt-4 mb-4 border-bottom center">
+        <form ng-submit="search(keyword)" name="searchForm" class="form-horizontal center mt-2 center">
+          <div class="search">
+            <button type="submit" class="search_left"><svg version="1.1" viewBox="0 0 64 64" width="32" height="32" aria-hidden="false"><path d="M31 28.64l-7.57-7.57a12.53 12.53 0 1 0-2.36 2.36l7.57 7.57zm-17.5-6a9.17 9.17 0 1 1 6.5-2.64 9.11 9.11 0 0 1-6.5 2.67z"></path></svg></button>
+            <input type="text" ng-model="keyword" name="keyword" placeholder="Search free high-resolution photos">
           </div>
         </form>
-        <div class="container text-center">
+        <div ng-if="view==0" class="container text-center">
           <button ng-click="read()">Read</button> <button ng-click="reset()">Reset</button> 
           <select class="export" ng-model = "format" ng-options="x for x in exports"></select> 
           <button ng-click="export(format)">Export</button>
         </div>
       </div>
       <div id="view">
+        <div id="buffer" ng-if="view==1">
+          <h1>Trending Pix</h1>
+        </div>
       <div class="row">
-        <div class="column">
-          <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb-4 animated" alt="">
+        <div class="column" infinite-scroll="newExplore()" infinite-scroll-distance="3">
+          <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb- animated" alt="">
         </div>
         <div class="column">
-          <img ng-src={{item}} ng-repeat="item in items2" class="img-fluid mb-4 animated" alt="">
+          <img ng-src={{item}} ng-repeat="item in items2" class="img-fluid mb- animated" alt="">
         </div>
         <div class="column">
-          <img ng-src={{item}} ng-repeat="item in items3" class="img-fluid mb-4 animated" alt="">
+          <img ng-src={{item}} ng-repeat="item in items3" class="img-fluid mb- animated" alt="">
         </div>
       </div>
-    <!--  <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb-4 center" alt=""> -->
-    </div>
+
   </body>
 </html>
