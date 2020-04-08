@@ -14,7 +14,8 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.currid = 'home';
   $scope.view = 0;
   $scope.username;
-  $scope.password
+  $scope.password;
+  $scope.class="show";
   $scope.search = function(){
     $scope.items=[];
     $scope.package=[];
@@ -34,11 +35,11 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       var index = data.data.data.length-1;
       for(var i = 0; i < data.data.data[index].data.length; i++) {
         if((i+1) % 3 == 0)
-          $scope.items.push(data.data.data[index].data[i].urls.regular);
+          $scope.items.push(data.data.data[index].data[i].urls.small);
         else if((i+1) % 2 == 0)
-          $scope.items2.push(data.data.data[index].data[i].urls.regular);
+          $scope.items2.push(data.data.data[index].data[i].urls.small);
         else if((i+1) % 1 == 0)
-          $scope.items3.push(data.data.data[index].data[i].urls.regular);
+          $scope.items3.push(data.data.data[index].data[i].urls.small);
       }
     });
   }
