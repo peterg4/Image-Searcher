@@ -29,15 +29,15 @@
           <a class="nav-link active" id="home" ng-click="view=0;changeActive('home')" href="#">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="explore" ng-click="view=0;changeActive('explore')" href="#one">Explore</a>
+            <a class="nav-link" id="explore" ng-click="view=0;changeActive('explore')" href="#">Explore</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="collections" ng-click="view=0;changeActive('collections')" href="#three">Collections</a>
+          <a class="nav-link" id="collections" ng-click="view=0;changeActive('collections')" href="#">Collections</a>
           </li>
         <li class="nav-item">
-          <a class="nav-link" id="wallpapers" ng-click="view=0;changeActive('wallpapers')" href="#three">Wallpapers</a>
+          <a class="nav-link" id="wallpapers" ng-click="view=0;changeActive('wallpapers')" href="#">Wallpapers</a>
         </li>
-          <button id="upload" data-toggle="modal" data-target="#register" href="#three">Upload</button>
+          <button id="upload" data-toggle="modal" data-target="{{target}}">Upload</button>
       </ul>
       <div class="form-inline my-2 my-lg-0 right">
           <a href="#" data-toggle="modal" data-target="#register" class="nav-link">Sign Up</a>| <button class="login" ng-if="!logged" data-toggle="modal" data-target="#login">Log in</button><button class="login" ng-if="logged" ng-click="logout()">Log Out</button>
@@ -87,6 +87,30 @@
           </div>
           <div class="modal-footer">
             <button type="button" ng-click="login()" data-dismiss="modal">Log in</button>
+            <button type="button" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Upload Modal-->
+    <div class="modal fade" id="upl" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Upload</h5>
+            <button type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form ng-submit="register()" class="form-inline my-2 my-lg-0">
+              <input class="register" type="text" placeholder="Username" ng-model="username" name="username">
+              <input class="register" type="password" placeholder="Password" ng-model="password" name="password">
+          </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" ng-click="login()" data-dismiss="modal">Upload</button>
             <button type="button" data-dismiss="modal">Close</button>
           </div>
         </div>

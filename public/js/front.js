@@ -18,6 +18,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.class="show";
   $scope.userdata = 0;
   $scope.logged = 0;
+  $scope.target = '#login';
   $scope.search = function(){
     $scope.items=[];
     $scope.package=[];
@@ -25,6 +26,21 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $scope.package.push($scope.count);
     console.log($scope.package);
     socket.emit('lookup', $scope.package);
+    $http.get("/lookup?keyword="+$scope.lookup).then(function(data) {
+      $scope.items=[];
+      $scope.items2=[];
+      $scope.items3=[];
+      $scope.items4=[];
+      console.log(data);
+      for(var i = 0; i < data.data.data.length; i++) {
+        if((i+1) % 3 == 0)
+          $scope.items.push(data.data.data[i].urls.small);
+        else if((i+1) % 2 == 0)
+          $scope.items2.push(data.data.data[i].urls.small);
+        else if((i+1) % 1 == 0)
+          $scope.items3.push(data.data.data[i].urls.small);
+      }
+    });
   }
   $scope.read = function(){
     $scope.items=[];
@@ -46,7 +62,10 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     });
   }
   $scope.reset = function(){
-    $scope.items = [];
+    $scope.items=[];
+    $scope.items2=[];
+    $scope.items3=[];
+    $scope.items4=[];
     socket.emit('reset');
   }
   $scope.export = function(format) {
@@ -75,6 +94,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
         $scope.$apply(function () {
           $scope.userdata = data;
           $scope.logged = 1;
+          $scope.target = '#upl';
         })
       }
       console.log($scope.userdata);
@@ -83,5 +103,6 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.logout = function() {
     $scope.logged = 0;
     $scope.userdata = 0;
+    $scope.target = '#login';
   }
 }]);

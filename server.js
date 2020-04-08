@@ -97,6 +97,16 @@ async function main() {
         });
       });
     });
+    app.get('/lookup', function(req, res) {
+      let url = 'https://api.unsplash.com/search/photos?per_page=25&query='+req.query.keyword+'&client_id=cb74d8278199920f87f738071a4b5957f92c83d2704aa72f0ea8f0fd04564f65';
+      let settings = { method: "Get" };
+      fetch(url, settings)
+        .then(res => res.json())
+        .then((json) => {
+          console.log(json.results);
+          res.json({data: json.results});
+      });
+    });
 
     app.use(express.static('public'));
     // start server
