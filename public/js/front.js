@@ -33,14 +33,12 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       console.log(data);
       var index = data.data.data.length-1;
       for(var i = 0; i < data.data.data[index].data.length; i++) {
-        if(i % 4 == 0)
+        if((i+1) % 3 == 0)
           $scope.items.push(data.data.data[index].data[i].urls.regular);
-        else if(i % 3 == 0)
+        else if((i+1) % 2 == 0)
           $scope.items2.push(data.data.data[index].data[i].urls.regular);
-        else if(i % 2 == 0)
+        else if((i+1) % 1 == 0)
           $scope.items3.push(data.data.data[index].data[i].urls.regular);
-        else
-          $scope.items4.push(data.data.data[index].data[i].urls.regular);
       }
     });
   }
@@ -62,4 +60,5 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     console.log('register', package);
     socket.emit('register', package);
   }
+  
 }]);

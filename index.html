@@ -40,7 +40,7 @@
           <button id="upload" data-toggle="modal" data-target="#register" href="#three">Upload</button>
       </ul>
       <form class="form-inline my-2 my-lg-0 right">
-          <a href="#" data-toggle="modal" data-target="#register" class="nav-link">Sign Up</a>| <button class="login" type="submit">Login</button>
+          <a href="#" ng-if="!username" data-toggle="modal" data-target="#register" class="nav-link">Sign Up</a>| <button class="login" type="submit">Login</button>
       </form>
       </div>
     </nav>
@@ -86,7 +86,7 @@
       </div>
       <div id="view">
       <div class="row">
-        <div class="column">
+        <div ng-if="items[4]" class="column animate-if">
           <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb-4 center" alt="">
         </div>
         <div class="column">
@@ -94,9 +94,6 @@
         </div>
         <div class="column">
           <img ng-src={{item}} ng-repeat="item in items3" class="img-fluid mb-4 center" alt="">
-        </div>
-        <div class="column">
-          <img ng-src={{item}} ng-repeat="item in items4" class="img-fluid mb-4 center" alt="">
         </div>
       </div>
     <!--  <img ng-src={{item}} ng-repeat="item in items" class="img-fluid mb-4 center" alt=""> -->
