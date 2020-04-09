@@ -1,5 +1,5 @@
 /* ng-infinite-scroll - v1.3.0 - 2016-06-30 */
-angular.module('infinite-scroll', []).value('THROTTLE_MILLISECONDS', null).directive('infiniteScroll', [
+angular.module('infinite-scroll', []).value('THROTTLE_MILLISECONDS', 1000).directive('infiniteScroll', [
   '$rootScope', '$window', '$interval', 'THROTTLE_MILLISECONDS', function($rootScope, $window, $interval, THROTTLE_MILLISECONDS) {
     return {
       scope: {
