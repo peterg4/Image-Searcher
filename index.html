@@ -34,10 +34,10 @@
             <a class="nav-link" id="explore" ng-click="view=1;changeActive('explore');explore()" href="#">Explore</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="collections" ng-click="view=2;changeActive('collections')" href="#">Collections</a>
+          <a class="nav-link" id="collections" ng-click="view=2;changeActive('collections');collections()" href="#">Collections</a>
           </li>
         <li class="nav-item">
-          <a class="nav-link" id="wallpapers" ng-click="view=3;changeActive('wallpapers')" href="#">Wallpapers</a>
+          <a class="nav-link" ng-if="userdata" id="wallpapers" ng-click="view=3;changeActive('wallpapers')" href="#">Saved</a>
         </li>
           <button id="upload" data-toggle="modal" data-target="{{target}}">Upload</button>
       </ul>
@@ -129,14 +129,16 @@
           </div>
         </form>
         <div ng-if="view==0" class="container text-center">
-          <button ng-click="read()">Read</button> <button ng-click="reset()">Reset</button> 
-          <select class="export" ng-model = "format" ng-options="x for x in exports"></select> 
+          <button ng-click="reset()">Reset</button> 
           <button ng-click="export(format)">Export</button>
         </div>
       </div>
       <div id="view">
         <div id="buffer" ng-if="view==1">
           <h1>Trending Pix</h1>
+        </div>
+        <div id="buffer" ng-if="view==2">
+          <h1>Trending Collections</h1>
         </div>
       <div class="row">
         <div class="column">
@@ -168,6 +170,7 @@
         </div>
         <div ng-if="view==0 && keyword" infinite-scroll="moreSearch()" infinite-scroll-distance="1" infinite-scroll-use-document-bottom="true"></div>
         <div ng-if="view==1" infinite-scroll="moreExplore()" infinite-scroll-distance="1" infinite-scroll-use-document-bottom="true"></div>
+        <div ng-if="view==2" infinite-scroll="moreColllections()" infinite-scroll-distance="1" infinite-scroll-use-document-bottom="true"></div>
       </div>
 
   </body>

@@ -136,7 +136,16 @@ async function main() {
           res.json({data: json});
       });
     })
-
+    app.get('/collections', function(req, res) {
+      let url = 'https://api.unsplash.com/collections/featured?page='+req.query.page+'&client_id=cb74d8278199920f87f738071a4b5957f92c83d2704aa72f0ea8f0fd04564f65';
+      let settings = { method: "Get" };
+      fetch(url, settings)
+        .catch(err => console.error(err)) 
+        .then(res => res.json())
+        .then((json) => {
+          res.json({data: json});
+      });
+    });
     app.use(express.static('public'));
     // start server
     http.listen(3000, function(){

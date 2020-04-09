@@ -167,6 +167,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       console.log($scope.userdata);
     });
   }
+  //saves an image to a users profile
   $scope.save = function(data) {
     var pack = {...data, ...$scope.userdata};
     console.log(pack);
@@ -177,5 +178,66 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $scope.logged = 0;
     $scope.userdata = 0;
     $scope.target = '#login';
+  }
+  $scope.collections = function() { 
+    $scope.items=[];
+    $scope.items2=[];
+    $scope.items3=[];
+    $scope.page_count = 1;
+    $http.get("/collections?page=1").then(function(data) {
+      console.log(data);
+      var entry = [];
+      for(var i = 0; i < data.data.data.length; i++) {
+        if((i+1) % 3 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].cover_photo.urls.small);
+          entry.push(data.data.data[i].title);
+          entry.push(data.data.data[i].user.profile_image.small);
+          $scope.items.push(entry);
+        } else if((i+1) % 2 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].cover_photo.urls.small);
+          entry.push(data.data.data[i].title);
+          entry.push(data.data.data[i].user.profile_image.small);
+          $scope.items2.push(entry);
+        }
+        else if((i+1) % 1 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].cover_photo.urls.small);
+          entry.push(data.data.data[i].title);
+          entry.push(data.data.data[i].user.profile_image.small);
+          $scope.items3.push(entry);
+        }
+      }
+    });
+  }
+  $scope.moreCollections = function() {
+    $scope.page_count++;
+    $http.get("/collections?page="+$scope.page_count).then(function(data) {
+      console.log(data);
+      var entry = [];
+      for(var i = 0; i < data.data.data.length; i++) {
+        if((i+1) % 3 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].cover_photo.urls.small);
+          entry.push(data.data.data[i].title);
+          entry.push(data.data.data[i].user.profile_image.small);
+          $scope.items.push(entry);
+        } else if((i+1) % 2 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].cover_photo.urls.small);
+          entry.push(data.data.data[i].title);
+          entry.push(data.data.data[i].user.profile_image.small);
+          $scope.items2.push(entry);
+        }
+        else if((i+1) % 1 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].cover_photo.urls.small);
+          entry.push(data.data.data[i].title);
+          entry.push(data.data.data[i].user.profile_image.small);
+          $scope.items3.push(entry);
+        }
+      }
+    });
   }
 }]);
