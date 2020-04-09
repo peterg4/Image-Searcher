@@ -15,6 +15,12 @@ nav {
     color: #141414!important;  
     cursor: pointer;
 }
+.nav-name {
+    color: #141414!important;
+    line-height: 30px;
+    padding: 0 11px;
+    margin: 6px 5px 5px 11px;
+}
 .nav-link:hover {
     color: #858181!important;  
     cursor: pointer;
@@ -155,9 +161,6 @@ img::before {
     content: '';
     padding-top: calc(100% * 2 / 3);
 }
-img:hover{
-
-}
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -189,7 +192,9 @@ img:hover{
  h1{
     font-weight: 100;
     font-size: 3.0rem;
-    margin: 10px 0;
+    padding: 20px;
+    border-bottom: 1px solid #bcbcbc;
+    margin: 27px 0;
  }
 
 .img_container {
@@ -207,6 +212,7 @@ img:hover{
 }
 
 .middle {
+    width: 100%;
     transition: .5s ease;
     opacity: 0;
     position: absolute;
@@ -229,6 +235,7 @@ img:hover{
     font-size: 16px;
     line-height: 30px;
     padding: 0px 11px;
+    text-align: left;
 }
 .profile{
     display: inline-block;
@@ -240,6 +247,19 @@ img:hover{
     display: inline-block;
     margin: 5px 0px 0px 5px;
     vertical-align: middle;
+}
+.save {
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    top: 0;
+    right: 30px;
+    font-size: 51px;
+    height: 35px;
+    margin-top: -23px;
+}
+.save:hover{
+    color: #bcbcbc;
 }
  @keyframes fadeIn {
     0% {opacity: 0; transform: scale(.9);}

@@ -26,9 +26,6 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.page_count = 1;
   //helper function for reading data into rows
   $scope.populate = function(data) {
-    $scope.items=[];
-    $scope.items2=[];
-    $scope.items3=[];
     console.log(data);
     var entry = [];
     for(var i = 0; i < data.data.data.length; i++) {
@@ -62,6 +59,9 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     console.log(package);
     socket.emit('lookup', package);
     $http.get("/lookup?keyword="+package[1]+"&page=1").then(function(data) {
+      $scope.items=[];
+      $scope.items2=[];
+      $scope.items3=[];
       $scope.populate(data);
     });
   }
@@ -69,30 +69,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.moreSearch = function(){
     $scope.page_count++;
     $http.get("/lookup?keyword="+$scope.keyword+"&page="+$scope.page_count).then(function(data) { 
-      console.log(data);
-      var entry = [];
-      for(var i = 0; i < data.data.data.length; i++) {
-        if((i+1) % 3 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].user.name);
-          entry.push(data.data.data[i].user.profile_image.small);
-          $scope.items.push(entry);
-        } else if((i+1) % 2 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].user.name);
-          entry.push(data.data.data[i].user.profile_image.small);
-          $scope.items2.push(entry);
-        }
-        else if((i+1) % 1 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].user.name);
-          entry.push(data.data.data[i].user.profile_image.small);
-          $scope.items3.push(entry);
-        }
-      }
+      $scope.populate(data);
     });
   }
   //gets trending images from unslpash and populates the page
@@ -102,59 +79,14 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $scope.items3=[];
     $scope.page_count = 1;
     $http.get("/explore?page=1").then(function(data) {
-      var entry = [];
-      for(var i = 0; i < data.data.data.length; i++) {
-        if((i+1) % 3 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].user.name);
-          entry.push(data.data.data[i].user.profile_image.small);
-          $scope.items.push(entry);
-        } else if((i+1) % 2 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].user.name);
-          entry.push(data.data.data[i].user.profile_image.small);
-          $scope.items2.push(entry);
-        }
-        else if((i+1) % 1 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].user.name);
-          entry.push(data.data.data[i].user.profile_image.small);
-          $scope.items3.push(entry);
-        }
-      }
+      $scope.populate(data);
     });
   }
   //adds more trending images if you hit the bottom of the page
   $scope.moreExplore = function() {
     $scope.page_count++;
     $http.get("/explore?page="+$scope.page_count).then(function(data) {
-      console.log(data);
-      var entry = [];
-      for(var i = 0; i < data.data.data.length; i++) {
-        if((i+1) % 3 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].user.name);
-          entry.push(data.data.data[i].user.profile_image.small);
-          $scope.items.push(entry);
-        } else if((i+1) % 2 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].user.name);
-          entry.push(data.data.data[i].user.profile_image.small);
-          $scope.items2.push(entry);
-        }
-        else if((i+1) % 1 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].user.name);
-          entry.push(data.data.data[i].user.profile_image.small);
-          $scope.items3.push(entry);
-        }
-      }
+      $scope.populate(data);
     });
   }
   //reads results from the database returns info about most recent search
@@ -234,6 +166,11 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       }
       console.log($scope.userdata);
     });
+  }
+  $scope.save = function(data) {
+    var pack = {...data, ...$scope.userdata};
+    console.log(pack);
+    socket.emit('save', pack);
   }
   //logs a user out of the DB
   $scope.logout = function() {

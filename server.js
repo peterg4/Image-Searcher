@@ -42,7 +42,6 @@ async function main() {
           .then((json) => {
             client.db().collection("data", {capped: false, w:1}, function(err, collection) {
               if(!err){
-                console.log(json.results);
                 collection.insertOne({data: json.results}, {w:1});
               } else {
                 console.log(err);
@@ -97,11 +96,21 @@ async function main() {
             });
         })
       });
+      socket.on('save', function(data) {
+        console.log(data);
+        client.db().collection('users', function(err, collection){
+          if(err) console.log(err);
+          else  
+            collection.findOneAndUpdate({username: data.username, pwd: data.pwd}, { $set: {saved: data[0]} }, function(err, doc) {
+              if(err) console.log(err);
+              else console.log(doc);
+            });
+        })
+      })
     });
     app.get('/read', function(req, res) {
       client.db().collection('data', function(err, collection) {
           collection.find().toArray(function(err,docs) {
-            console.log(docs);
             res.json({data: docs});
         });
       });
