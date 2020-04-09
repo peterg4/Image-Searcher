@@ -11,7 +11,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.items=[];
   $scope.items2=[];
   $scope.items3=[];
-  $scope.keyword = 'dog';
+  $scope.keyword;
   $scope.format = 'JSON';
   $scope.exports = ['JSON','CSV'];
   $scope.count = 25;

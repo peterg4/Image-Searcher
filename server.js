@@ -1,6 +1,13 @@
 // server init + mods
 // require syntax
 main();
+function checkStatus(res) {
+  if (res.ok) { // res.status >= 200 && res.status < 300
+      return res;
+  } else {
+      throw console.log(res.statusText + ': Most likely a rate limit issue');
+  }
+}
 async function main() {
 
   const fetch = require('node-fetch');
@@ -19,11 +26,8 @@ async function main() {
   try {
     //connect cluster
     await client.connect();
-  } catch (e) {
-    console.error(e);
-  } finally {
-    // server route handler
-    app.get('/', function(req, res){
+     // server route handler
+     app.get('/', function(req, res){
       res.sendFile(__dirname + '/index.html');
     });
     // user connected even handler
@@ -33,6 +37,7 @@ async function main() {
         let url = 'https://api.unsplash.com/search/photos?per_page='+package[0]+'&query='+package[1]+'&client_id=cb74d8278199920f87f738071a4b5957f92c83d2704aa72f0ea8f0fd04564f65';
         let settings = { method: "Get" };
         fetch(url, settings)
+          .then(checkStatus).catch(console.log('Rate Limit is 50/hour'))
           .then(res => res.json())
           .then((json) => {
             client.db().collection("data", {capped: false, w:1}, function(err, collection) {
@@ -106,6 +111,7 @@ async function main() {
       let url = 'https://api.unsplash.com/search/photos?page='+req.query.page+'&per_page=25&query='+req.query.keyword+'&client_id=cb74d8278199920f87f738071a4b5957f92c83d2704aa72f0ea8f0fd04564f65';
       let settings = { method: "Get" };
       fetch(url, settings)
+        .then(checkStatus).catch(console.log('Rate Limit is 50/hour'))
         .then(res => res.json())
         .then((json) => {
           res.json({data: json.results});
@@ -115,6 +121,7 @@ async function main() {
       let url = 'https://api.unsplash.com/photos?page='+req.query.page+'&per_page=30&client_id=cb74d8278199920f87f738071a4b5957f92c83d2704aa72f0ea8f0fd04564f65';
       let settings = { method: "Get" };
       fetch(url, settings)
+        .catch(err => console.error(err)) 
         .then(res => res.json())
         .then((json) => {
           res.json({data: json});
@@ -126,5 +133,9 @@ async function main() {
     http.listen(3000, function(){
       console.log('Server up on *:3000');
     });
+  } catch (e) {
+    console.error(e);
+  } finally {
+    console.log("End.")
   }
 }
