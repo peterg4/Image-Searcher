@@ -178,6 +178,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $scope.logged = 0;
     $scope.userdata = 0;
     $scope.target = '#login';
+    $scope.currid='home';
   }
   $scope.collections = function() { 
     $scope.items=[];
@@ -193,12 +194,14 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
           entry.push(data.data.data[i].cover_photo.urls.small);
           entry.push(data.data.data[i].title);
           entry.push(data.data.data[i].user.profile_image.small);
+          entry.push(data.data.data[i].links.html);
           $scope.items.push(entry);
         } else if((i+1) % 2 == 0) {
           entry = [];
           entry.push(data.data.data[i].cover_photo.urls.small);
           entry.push(data.data.data[i].title);
           entry.push(data.data.data[i].user.profile_image.small);
+          entry.push(data.data.data[i].links.html);
           $scope.items2.push(entry);
         }
         else if((i+1) % 1 == 0) {
@@ -206,6 +209,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
           entry.push(data.data.data[i].cover_photo.urls.small);
           entry.push(data.data.data[i].title);
           entry.push(data.data.data[i].user.profile_image.small);
+          entry.push(data.data.data[i].links.html);
           $scope.items3.push(entry);
         }
       }
@@ -222,12 +226,14 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
           entry.push(data.data.data[i].cover_photo.urls.small);
           entry.push(data.data.data[i].title);
           entry.push(data.data.data[i].user.profile_image.small);
+          entry.push(data.data.data[i].links.html);
           $scope.items.push(entry);
         } else if((i+1) % 2 == 0) {
           entry = [];
           entry.push(data.data.data[i].cover_photo.urls.small);
           entry.push(data.data.data[i].title);
           entry.push(data.data.data[i].user.profile_image.small);
+          entry.push(data.data.data[i].links.html);
           $scope.items2.push(entry);
         }
         else if((i+1) % 1 == 0) {
@@ -235,9 +241,37 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
           entry.push(data.data.data[i].cover_photo.urls.small);
           entry.push(data.data.data[i].title);
           entry.push(data.data.data[i].user.profile_image.small);
+          entry.push(data.data.data[i].links.html);
           $scope.items3.push(entry);
         }
       }
     });
+  }
+  $scope.open = function(data) {
+    console.log(data);
+    $http.get("/collections/collectionById?id="+data[3]).then(function(doc) {
+      console.log(doc);
+    });
+  }
+  $scope.readData = function() {
+    $scope.items=[];
+    $scope.items2=[];
+    $scope.items3=[];
+    for(var i = 0; i < $scope.userdata.saved.length; i++) {
+      if((i+1) % 3 == 0) {
+        entry = [];
+        entry.push($scope.userdata.saved);
+        $scope.items.push(entry);
+      } else if((i+1) % 2 == 0) {
+        entry = [];
+        entry.push($scope.userdata.saved);
+        $scope.items2.push(entry);
+      }
+      else if((i+1) % 1 == 0) {
+        entry = [];
+        entry.push($scope.userdata.saved);
+        $scope.items3.push(entry);
+      }
+    }
   }
 }]);

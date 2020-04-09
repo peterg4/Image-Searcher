@@ -6,6 +6,9 @@ body{
     width: 20%;
     margin: 0 auto;
 }
+.navbar-brand{
+    color: black!important;
+}
 nav {
     color: #141414;
     background-color: white;
@@ -260,6 +263,16 @@ img::before {
 }
 .save:hover{
     color: #bcbcbc;
+}
+a{
+    color: white;
+    font-variant: normal;
+    text-decoration: none;
+}
+a:hover{
+    color: #bcbcbc;
+    font-variant: normal;
+    text-decoration: none;
 }
 .search_left:hover{
     border: none!important;
