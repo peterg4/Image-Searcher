@@ -11,7 +11,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.items=[];
   $scope.items2=[];
   $scope.items3=[];
-  $scope.keyword;
+  $scope.keyword = 'dog';
   $scope.format = 'JSON';
   $scope.exports = ['JSON','CSV'];
   $scope.count = 25;
@@ -25,11 +25,14 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.target = '#login';
   $scope.page_count = 1;
 
+  //populated columns with data from search unsplash api call
   $scope.search = function(keyword){
+    $scope.page_count = 1;
+    $scope.keyword = keyword;
     var package = [$scope.count, keyword];
     console.log(package);
     socket.emit('lookup', package);
-    $http.get("/lookup?keyword="+package[1]).then(function(data) { //add a query for page count
+    $http.get("/lookup?keyword="+package[1]+"&page=1").then(function(data) {
       $scope.items=[];
       $scope.items2=[];
       $scope.items3=[];
@@ -44,11 +47,10 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       }
     });
   }
+  //adds more data when you hit the bottom of the page
   $scope.moreSearch = function(){
-    $http.get("/lookup?keyword="+package[1]).then(function(data) { //add query for page count
-      $scope.items=[];
-      $scope.items2=[];
-      $scope.items3=[];
+    $scope.page_count++;
+    $http.get("/lookup?keyword="+$scope.keyword+"&page="+$scope.page_count).then(function(data) { 
       console.log(data);
       for(var i = 0; i < data.data.data.length; i++) {
         if((i+1) % 3 == 0)
@@ -60,10 +62,12 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       }
     });
   }
+  //gets trending images from unslpash and populates the page
   $scope.explore = function() {
     $scope.items=[];
     $scope.items2=[];
     $scope.items3=[];
+    $scope.page_count = 1;
     $http.get("/explore?page=1").then(function(data) {
       console.log(data);
       for(var i = 0; i < data.data.data.length; i++) {
@@ -76,6 +80,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       }
     });
   }
+  //adds more trending images if you hit the bottom of the page
   $scope.moreExplore = function() {
     $scope.page_count++;
     $http.get("/explore?page="+$scope.page_count).then(function(data) {
@@ -90,6 +95,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       }
     });
   }
+  //reads results from the database returns info about most recent search
   $scope.read = function(){
     $scope.items=[];
     $scope.items2=[];
@@ -108,26 +114,31 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       }
     });
   }
+  //resets all data in the database -- includes userdata
   $scope.reset = function(){
     $scope.items=[];
     $scope.items2=[];
     $scope.items3=[];
     socket.emit('reset');
   }
+  //exports to selected format
   $scope.export = function(format) {
     console.log(format);
     socket.emit('export', format);
   }
+  //chanages the selected navbar element
   $scope.changeActive = function(id) {
     document.getElementById($scope.currid).className = 'nav-link';
     document.getElementById(id).className = 'nav-link active';
     $scope.currid = id;
   }
+  //registers a user in the database
   $scope.register = function() {
     var package = [$scope.username, $scope.password];
     console.log('register', package);
     socket.emit('register', package);
   }
+  //logs a user into the DB - stores userdata in var
   $scope.login = function() {
     var package = [$scope.username, $scope.password];
     console.log(package);
@@ -146,6 +157,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       console.log($scope.userdata);
     });
   }
+  //logs a user out of the DB
   $scope.logout = function() {
     $scope.logged = 0;
     $scope.userdata = 0;
