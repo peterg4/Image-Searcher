@@ -42,7 +42,7 @@
           <button id="upload" data-toggle="modal" data-target="{{target}}">Upload</button>
       </ul>
       <div class="form-inline my-2 my-lg-0 right">
-          <a href="#" data-toggle="modal" data-target="#register" class="nav-link">Sign Up</a>| <button class="login" ng-if="!logged" data-toggle="modal" data-target="#login">Log in</button><button class="login" ng-if="logged" ng-click="logout()">Log Out</button>
+          <a ng-if="!userinfo" href="#" data-toggle="modal" data-target="#register" class="nav-link">Sign Up</a>| <button class="login" ng-if="!logged" data-toggle="modal" data-target="#login">Log in</button><button class="login" ng-if="logged" ng-click="logout()">Log Out</button>
       </div>
       </div>
     </nav>
@@ -143,7 +143,7 @@
           <div class="img_container" ng-repeat="item in items">
             <img ng-src={{item[0]}} class="img-fluid mb- animated image" alt="">
             <div class="middle">
-              <div class="text">{{item[1]}}</div>
+              <div class="text"><img class="profile" ng-src={{item[2]}}> <div class="username">{{item[1]}}</div></div>
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@
           <div class="img_container" ng-repeat="item in items2">
             <img ng-src={{item[0]}} class="img-fluid mb- animated image" alt="">
             <div class="middle">
-              <div class="text">{{item[1]}}</div>
+              <div class="text"><img class="profile" ng-src={{item[2]}}> <div class="username">{{item[1]}}</div></div>
             </div>
           </div>
         </div>
@@ -159,7 +159,7 @@
           <div class="img_container" ng-repeat="item in items3">
             <img ng-src={{item[0]}} class="img-fluid mb- animated image" alt="">
             <div class="middle">
-              <div class="text">{{item[1]}}</div>
+              <div class="text"><img class="profile" ng-src={{item[2]}}> <div class="username">{{item[1]}}</div></div>
             </div>
           </div>
         </div>

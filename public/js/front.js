@@ -24,7 +24,36 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
   $scope.logged = 0;
   $scope.target = '#login';
   $scope.page_count = 1;
-
+  //helper function for reading data into rows
+  $scope.populate = function(data) {
+    $scope.items=[];
+    $scope.items2=[];
+    $scope.items3=[];
+    console.log(data);
+    var entry = [];
+    for(var i = 0; i < data.data.data.length; i++) {
+      if((i+1) % 3 == 0) {
+        entry = [];
+        entry.push(data.data.data[i].urls.small);
+        entry.push(data.data.data[i].user.name);
+        entry.push(data.data.data[i].user.profile_image.small);
+        $scope.items.push(entry);
+      } else if((i+1) % 2 == 0) {
+        entry = [];
+        entry.push(data.data.data[i].urls.small);
+        entry.push(data.data.data[i].user.name);
+        entry.push(data.data.data[i].user.profile_image.small);
+        $scope.items2.push(entry);
+      }
+      else if((i+1) % 1 == 0) {
+        entry = [];
+        entry.push(data.data.data[i].urls.small);
+        entry.push(data.data.data[i].user.name);
+        entry.push(data.data.data[i].user.profile_image.small);
+        $scope.items3.push(entry);
+      }
+    }
+  }
   //populated columns with data from search unsplash api call
   $scope.search = function(keyword){
     $scope.page_count = 1;
@@ -33,30 +62,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     console.log(package);
     socket.emit('lookup', package);
     $http.get("/lookup?keyword="+package[1]+"&page=1").then(function(data) {
-      $scope.items=[];
-      $scope.items2=[];
-      $scope.items3=[];
-      console.log(data);
-      var entry = [];
-      for(var i = 0; i < data.data.data.length; i++) {
-        if((i+1) % 3 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
-          $scope.items.push(entry);
-        } else if((i+1) % 2 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
-          $scope.items2.push(entry);
-        }
-        else if((i+1) % 1 == 0) {
-          entry = [];
-          entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
-          $scope.items3.push(entry);
-        }
-      }
+      $scope.populate(data);
     });
   }
   //adds more data when you hit the bottom of the page
@@ -69,18 +75,21 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
         if((i+1) % 3 == 0) {
           entry = [];
           entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
+          entry.push(data.data.data[i].user.name);
+          entry.push(data.data.data[i].user.profile_image.small);
           $scope.items.push(entry);
         } else if((i+1) % 2 == 0) {
           entry = [];
           entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
+          entry.push(data.data.data[i].user.name);
+          entry.push(data.data.data[i].user.profile_image.small);
           $scope.items2.push(entry);
         }
         else if((i+1) % 1 == 0) {
           entry = [];
           entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
+          entry.push(data.data.data[i].user.name);
+          entry.push(data.data.data[i].user.profile_image.small);
           $scope.items3.push(entry);
         }
       }
@@ -98,18 +107,21 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
         if((i+1) % 3 == 0) {
           entry = [];
           entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
+          entry.push(data.data.data[i].user.name);
+          entry.push(data.data.data[i].user.profile_image.small);
           $scope.items.push(entry);
         } else if((i+1) % 2 == 0) {
           entry = [];
           entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
+          entry.push(data.data.data[i].user.name);
+          entry.push(data.data.data[i].user.profile_image.small);
           $scope.items2.push(entry);
         }
         else if((i+1) % 1 == 0) {
           entry = [];
           entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
+          entry.push(data.data.data[i].user.name);
+          entry.push(data.data.data[i].user.profile_image.small);
           $scope.items3.push(entry);
         }
       }
@@ -125,18 +137,21 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
         if((i+1) % 3 == 0) {
           entry = [];
           entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
+          entry.push(data.data.data[i].user.name);
+          entry.push(data.data.data[i].user.profile_image.small);
           $scope.items.push(entry);
         } else if((i+1) % 2 == 0) {
           entry = [];
           entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
+          entry.push(data.data.data[i].user.name);
+          entry.push(data.data.data[i].user.profile_image.small);
           $scope.items2.push(entry);
         }
         else if((i+1) % 1 == 0) {
           entry = [];
           entry.push(data.data.data[i].urls.small);
-          entry.push(data.data.data[i].likes);
+          entry.push(data.data.data[i].user.name);
+          entry.push(data.data.data[i].user.profile_image.small);
           $scope.items3.push(entry);
         }
       }
@@ -156,19 +171,22 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
         if((i+1) % 3 == 0) {
           entry = [];
           entry.push(data.data.data[index].data[i].urls.small);
-          entry.push(data.data.data[index].data[i].likes);
+          entry.push(data.data.data[index].data[i].user.name);
+          entry.push(data.data.data[index].data[i].user.profile_image.small);
           $scope.items.push(entry);
         }
         else if((i+1) % 2 == 0) {
           entry = [];
           entry.push(data.data.data[index].data[i].urls.small);
-          entry.push(data.data.data[index].data[i].likes);
+          entry.push(data.data.data[index].data[i].user.name);
+          entry.push(data.data.data[index].data[i].user.profile_image.small);
           $scope.items2.push(entry);
         }
         else if((i+1) % 1 == 0) {
           entry = [];
           entry.push(data.data.data[index].data[i].urls.small);
-          entry.push(data.data.data[index].data[i].likes);
+          entry.push(data.data.data[index].data[i].user.name);
+          entry.push(data.data.data[index].data[i].user.profile_image.small);
           $scope.items3.push(entry);
         }
       }
