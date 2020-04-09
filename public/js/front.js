@@ -29,7 +29,23 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     var package = [$scope.count, keyword];
     console.log(package);
     socket.emit('lookup', package);
-    $http.get("/lookup?keyword="+package[1]).then(function(data) {
+    $http.get("/lookup?keyword="+package[1]).then(function(data) { //add a query for page count
+      $scope.items=[];
+      $scope.items2=[];
+      $scope.items3=[];
+      console.log(data);
+      for(var i = 0; i < data.data.data.length; i++) {
+        if((i+1) % 3 == 0)
+          $scope.items.push(data.data.data[i].urls.small);
+        else if((i+1) % 2 == 0)
+          $scope.items2.push(data.data.data[i].urls.small);
+        else if((i+1) % 1 == 0)
+          $scope.items3.push(data.data.data[i].urls.small);
+      }
+    });
+  }
+  $scope.moreSearch = function(){
+    $http.get("/lookup?keyword="+package[1]).then(function(data) { //add query for page count
       $scope.items=[];
       $scope.items2=[];
       $scope.items3=[];
@@ -60,7 +76,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       }
     });
   }
-  $scope.newExplore = function() {
+  $scope.moreExplore = function() {
     $scope.page_count++;
     $http.get("/explore?page="+$scope.page_count).then(function(data) {
       console.log(data);

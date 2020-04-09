@@ -13,7 +13,7 @@ async function main() {
   const Json2csvParser = require("json2csv").Parser;
   const {MongoClient} = require('mongodb');
   const uri = "mongodb+srv://gpeterson:X4CCPcfnMbJ1ZQN6@cluster0-pt6fc.mongodb.net/lab6?retryWrites=true&w=majority";
-  const client = new MongoClient(uri);
+  const client = new MongoClient(uri,{useUnifiedTopology: true});
   var data;
 
   try {
@@ -30,13 +30,18 @@ async function main() {
     io.on('connection', function(socket){  
       socket.on('lookup', function(package){
         console.log(package);
-        let url = 'https://api.unsplash.com/search/photos?per_page='+package[1]+'&query='+package[0]+'&client_id=cb74d8278199920f87f738071a4b5957f92c83d2704aa72f0ea8f0fd04564f65';
+        let url = 'https://api.unsplash.com/search/photos?per_page='+package[0]+'&query='+package[1]+'&client_id=cb74d8278199920f87f738071a4b5957f92c83d2704aa72f0ea8f0fd04564f65';
         let settings = { method: "Get" };
         fetch(url, settings)
           .then(res => res.json())
           .then((json) => {
             client.db().collection("data", {capped: false, w:1}, function(err, collection) {
-              collection.insertOne({data: json.results}, {w:1});
+              if(!err){
+                console.log(json.results);
+                collection.insertOne({data: json.results}, {w:1});
+              } else {
+                console.log(err);
+              } 
             });
           });
       });
@@ -91,6 +96,7 @@ async function main() {
     app.get('/read', function(req, res) {
       client.db().collection('data', function(err, collection) {
           collection.find().toArray(function(err,docs) {
+            console.log(docs);
             res.json({data: docs});
         });
       });

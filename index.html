@@ -28,7 +28,7 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link active" id="home" ng-click="view=0;changeActive('home')" href="#">Home</a>
+          <a class="nav-link active" id="home" ng-click="view=0;changeActive('home');read()" href="#">Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="explore" ng-click="view=1;changeActive('explore');explore()" href="#">Explore</a>
@@ -139,7 +139,7 @@
           <h1>Trending Pix</h1>
         </div>
       <div class="row">
-        <div class="column" infinite-scroll="newExplore()" infinite-scroll-distance="3">
+        <div class="column">
           <div class="img_container" ng-repeat="item in items">
             <img ng-src={{item}} class="img-fluid mb- animated image" alt="">
             <div class="middle">
@@ -163,6 +163,8 @@
             </div>
           </div>
         </div>
+        <div ng-if="view==0" infinite-scroll="moreSearch()" infinite-scroll-distance="2"></div>
+        <div ng-if="view==1" infinite-scroll="moreExplore()" infinite-scroll-distance="2"></div>
       </div>
 
   </body>
