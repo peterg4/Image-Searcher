@@ -37,13 +37,25 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       $scope.items2=[];
       $scope.items3=[];
       console.log(data);
+      var entry = [];
       for(var i = 0; i < data.data.data.length; i++) {
-        if((i+1) % 3 == 0)
-          $scope.items.push(data.data.data[i].urls.small);
-        else if((i+1) % 2 == 0)
-          $scope.items2.push(data.data.data[i].urls.small);
-        else if((i+1) % 1 == 0)
-          $scope.items3.push(data.data.data[i].urls.small);
+        if((i+1) % 3 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items.push(entry);
+        } else if((i+1) % 2 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items2.push(entry);
+        }
+        else if((i+1) % 1 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items3.push(entry);
+        }
       }
     });
   }
@@ -52,13 +64,25 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $scope.page_count++;
     $http.get("/lookup?keyword="+$scope.keyword+"&page="+$scope.page_count).then(function(data) { 
       console.log(data);
+      var entry = [];
       for(var i = 0; i < data.data.data.length; i++) {
-        if((i+1) % 3 == 0)
-          $scope.items.push(data.data.data[i].urls.small);
-        else if((i+1) % 2 == 0)
-          $scope.items2.push(data.data.data[i].urls.small);
-        else if((i+1) % 1 == 0)
-          $scope.items3.push(data.data.data[i].urls.small);
+        if((i+1) % 3 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items.push(entry);
+        } else if((i+1) % 2 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items2.push(entry);
+        }
+        else if((i+1) % 1 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items3.push(entry);
+        }
       }
     });
   }
@@ -69,14 +93,25 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $scope.items3=[];
     $scope.page_count = 1;
     $http.get("/explore?page=1").then(function(data) {
-      console.log(data);
+      var entry = [];
       for(var i = 0; i < data.data.data.length; i++) {
-        if((i+1) % 3 == 0)
-          $scope.items.push(data.data.data[i].urls.small);
-        else if((i+1) % 2 == 0)
-          $scope.items2.push(data.data.data[i].urls.small);
-        else if((i+1) % 1 == 0)
-          $scope.items3.push(data.data.data[i].urls.small);
+        if((i+1) % 3 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items.push(entry);
+        } else if((i+1) % 2 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items2.push(entry);
+        }
+        else if((i+1) % 1 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items3.push(entry);
+        }
       }
     });
   }
@@ -85,13 +120,25 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $scope.page_count++;
     $http.get("/explore?page="+$scope.page_count).then(function(data) {
       console.log(data);
+      var entry = [];
       for(var i = 0; i < data.data.data.length; i++) {
-        if((i+1) % 3 == 0)
-          $scope.items.push(data.data.data[i].urls.small);
-        else if((i+1) % 2 == 0)
-          $scope.items2.push(data.data.data[i].urls.small);
-        else if((i+1) % 1 == 0)
-          $scope.items3.push(data.data.data[i].urls.small);
+        if((i+1) % 3 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items.push(entry);
+        } else if((i+1) % 2 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items2.push(entry);
+        }
+        else if((i+1) % 1 == 0) {
+          entry = [];
+          entry.push(data.data.data[i].urls.small);
+          entry.push(data.data.data[i].likes);
+          $scope.items3.push(entry);
+        }
       }
     });
   }
@@ -104,13 +151,26 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
     $http.get("/read").then(function(data) {
       console.log(data);
       var index = data.data.data.length-1;
+      var entry = [];
       for(var i = 0; i < data.data.data[index].data.length; i++) {
-        if((i+1) % 3 == 0)
-          $scope.items.push(data.data.data[index].data[i].urls.small);
-        else if((i+1) % 2 == 0)
-          $scope.items2.push(data.data.data[index].data[i].urls.small);
-        else if((i+1) % 1 == 0)
-          $scope.items3.push(data.data.data[index].data[i].urls.small);
+        if((i+1) % 3 == 0) {
+          entry = [];
+          entry.push(data.data.data[index].data[i].urls.small);
+          entry.push(data.data.data[index].data[i].likes);
+          $scope.items.push(entry);
+        }
+        else if((i+1) % 2 == 0) {
+          entry = [];
+          entry.push(data.data.data[index].data[i].urls.small);
+          entry.push(data.data.data[index].data[i].likes);
+          $scope.items2.push(entry);
+        }
+        else if((i+1) % 1 == 0) {
+          entry = [];
+          entry.push(data.data.data[index].data[i].urls.small);
+          entry.push(data.data.data[index].data[i].likes);
+          $scope.items3.push(entry);
+        }
       }
     });
   }

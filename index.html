@@ -10,7 +10,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://unpkg.com/unsplash@latest/uh.js" ></script>
-  <script type='text/javascript' src='js/ng-infinite-scroll/build/ng-infinite-scroll.min.js'></script>
+  <script type='text/javascript' src='js/ng-infinite-scroll/build/ng-infinite-scroll.js'></script>
   <link rel="stylesheet" type = "text/css" href="/css/style.css">
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -141,25 +141,25 @@
       <div class="row">
         <div class="column">
           <div class="img_container" ng-repeat="item in items">
-            <img ng-src={{item}} class="img-fluid mb- animated image" alt="">
+            <img ng-src={{item[0]}} class="img-fluid mb- animated image" alt="">
             <div class="middle">
-              <div class="text">John Doe</div>
+              <div class="text">{{item[1]}}</div>
             </div>
           </div>
         </div>
         <div class="column">
           <div class="img_container" ng-repeat="item in items2">
-            <img ng-src={{item}} class="img-fluid mb- animated image" alt="">
+            <img ng-src={{item[0]}} class="img-fluid mb- animated image" alt="">
             <div class="middle">
-              <div class="text">John Doe</div>
+              <div class="text">{{item[1]}}</div>
             </div>
           </div>
         </div>
         <div class="column">
           <div class="img_container" ng-repeat="item in items3">
-            <img ng-src={{item}} class="img-fluid mb- animated image" alt="">
+            <img ng-src={{item[0]}} class="img-fluid mb- animated image" alt="">
             <div class="middle">
-              <div class="text">John Doe</div>
+              <div class="text">{{item[1]}}</div>
             </div>
           </div>
         </div>
