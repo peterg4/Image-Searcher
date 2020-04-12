@@ -1,12 +1,5 @@
-Features:	login/user system
-          	save photos to profile
-		search photos by keyword
-		explore trending photos
-		explore trending collections of photos
-		infinite scroll on all pages	
+#Pix
+Stock image searcher using Unsplash API. Supports saving images to a user profile and includes statistics about most searched images. Built with MEAN stack. 
 
-Difficult things: Setting up the initial connection to MongoDB Atlas/learning the functionality
-		  Exporting the data to CSV
-Easy things:	  Reading data, resetting data, exporting to JSON
 
 		  
