@@ -285,27 +285,37 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       var titles = [];
       var uploads = [];
       //0e7e3ac9d01db8 token
-      var locations = [{
-
-      }];
-      var colorSet = new am4core.ColorSet();
+      var bubbles = [
+      {
+        x: 2017,
+        y: 3,
+        r: 2
+      }
+      ];
+      var cnt = 0;
+      for(var i = 0; i < 4; i++) {
+        for(var j = 0; j < 4; j++) {
+          bubbles[cnt] = {x: 2017+i, y: 2017+j, r: 1 };
+          cnt++;
+        }
+      }
       for(var i = 0; i < obj.length; i++) {
         var sublikes = 0;
         var subload = 0;
         for( var j = 0; j < obj[i].data.length; j++) {
-          var userobj = { "title": obj[i].data[j].user.name,
-                          "latitude": 10,
-                          "longitude": 10,
-                          "color": colorSet.next() 
-                         };
           sublikes += obj[i].data[j].likes;
           subload += obj[i].data[j].user.total_photos;
-          locations[i*j] = userobj;
+          var cr = obj[i].data[j].created_at.substr(0,4) - 2017;
+          var up = obj[i].data[j].updated_at.substr(0,4) - 2017;
+          var ind = 4*cr + up;
+          if(ind > -1 && ind < 16)
+            bubbles[ind].r += 1;
         }
         likes.push(sublikes);
         titles.push(obj[i].data[0].tags[0].title);
         uploads.push(subload);
       }
+      console.log(bubbles);
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'bar',
@@ -364,68 +374,35 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
         }
       });
 
-      // Themes begin
-      am4core.useTheme(am4themes_animated);
-      // Themes end
-
-      // Create map instance
-      var chart = am4core.create("chartdiv", am4maps.MapChart);
-
-      // Set map definition
-      chart.geodata = am4geodata_worldLow;
-
-      // Set projection
-      chart.projection = new am4maps.projections.Miller();
-
-      // Create map polygon series
-      var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
-
-      // Exclude Antartica
-      polygonSeries.exclude = ["AQ"];
-
-      // Make map load polygon (like country names) data from GeoJSON
-      polygonSeries.useGeodata = true;
-
-      // Configure series
-      var polygonTemplate = polygonSeries.mapPolygons.template;
-      polygonTemplate.tooltipText = "{name}";
-      polygonTemplate.polygon.fillOpacity = 0.6;
-
-
-      // Create hover state and set alternative fill color
-      var hs = polygonTemplate.states.create("hover");
-      hs.properties.fill = chart.colors.getIndex(0);
-
-      // Add image series
-      var imageSeries = chart.series.push(new am4maps.MapImageSeries());
-      imageSeries.mapImages.template.propertyFields.longitude = "longitude";
-      imageSeries.mapImages.template.propertyFields.latitude = "latitude";
-      imageSeries.mapImages.template.tooltipText = "{title}";
-      imageSeries.mapImages.template.propertyFields.url = "url";
-
-      var circle = imageSeries.mapImages.template.createChild(am4core.Circle);
-      circle.radius = 3;
-      circle.propertyFields.fill = "color";
-
-      var circle2 = imageSeries.mapImages.template.createChild(am4core.Circle);
-      circle2.radius = 3;
-      circle2.propertyFields.fill = "color";
-
-
-      circle2.events.on("inited", function(event){
-        animateBullet(event.target);
-      })
-
-
-      function animateBullet(circle) {
-          var animation = circle.animate([{ property: "scale", from: 1, to: 5 }, { property: "opacity", from: 1, to: 0 }], 1000, am4core.ease.circleOut);
-          animation.events.on("animationended", function(event){
-            animateBullet(event.target.object);
-          })
-      }
-
-      imageSeries.data = locations;
-
+      var ctx = document.getElementById('myChart3').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'bubble',
+        data: {
+          labels: titles,
+          datasets: [{
+              label: 'Upload Timeframes',
+              backgroundColor: 'rgb(132, 99, 255)',
+              borderColor: 'rgb(132, 99, 255)',
+              data: bubbles,
+            }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: false
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                  beginAtZero: false,
+                  display: true
+              }
+            }]
+          }
+        }
+      });
 
     });
   }
