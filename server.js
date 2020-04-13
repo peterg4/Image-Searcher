@@ -156,6 +156,13 @@ async function main() {
           res.json({data: json});
       });
     });
+    app.get('/stats', function(req, res) {
+      client.db().collection('data', function(err, collection) {
+        collection.find().toArray(function(err,docs) {
+          res.json({data: docs});
+      });
+    });
+    });
     app.use(express.static('public'));
     // start server
     http.listen(3000, function(){

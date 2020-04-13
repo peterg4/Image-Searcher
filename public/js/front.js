@@ -247,12 +247,14 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       }
     });
   }
+  //open a specific collection on unplash
   $scope.open = function(data) {
     console.log(data);
     $http.get("/collections/collectionById?id="+data[3]).then(function(doc) {
       console.log(doc);
     });
   }
+  //read userdata
   $scope.readData = function() {
     $scope.items=[];
     $scope.items2=[];
@@ -273,5 +275,51 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
         $scope.items3.push(entry);
       }
     }
+  }
+  //
+  $scope.statistics = function() {
+    $http.get("/stats").then(function(data) {
+      console.log(data.data.data);
+      var obj =  data.data.data;
+      var likes = [];
+      var titles = [];
+      
+      for(var i = 0; i < obj.length; i++) {
+        for( var j = 0; j < obj[i].data.length; j++) {
+          likes.push(obj[i].data[j].likes);
+          titles.push(obj[i].data[j].tags[0].title);
+        }
+      }
+      console.log(likes);
+      console.log(titles);
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: titles,
+          datasets: [{
+              label: 'Most Liked Pix',
+              backgroundColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(255, 99, 132)',
+              data: likes,
+            }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                  display: false 
+              }
+            }]
+          }
+        }
+      });
+    });
   }
 }]);

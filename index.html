@@ -13,6 +13,7 @@
   <script type='text/javascript' src='js/ng-infinite-scroll/build/ng-infinite-scroll.js'></script>
   <link rel="stylesheet" type = "text/css" href="/css/style.css">
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/front.js"></script>
@@ -35,7 +36,10 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" id="collections" ng-click="view=2;changeActive('collections');collections()" href="#">Collections</a>
-          </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="stats" ng-click="view=4;changeActive('stats');statistics()" href="#">Statistics</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" ng-if="userdata" id="wallpapers" ng-click="view=3;changeActive('wallpapers');readData()" href="#">Saved</a>
         </li>
@@ -119,7 +123,7 @@
     </div>
 
     <!--Home-->
-    <div class="panel center">
+    <div ng-if="view!=4" class="panel center">
       <div ng-if="view==0" class="pb-2 mt-4 mb-4 border-bottom center">
         <form ng-submit="search(keyword)" name="searchForm" class="form-horizontal center mt-2 center">
           <div class="search">
@@ -128,7 +132,6 @@
           </div>
         </form>
         <div ng-if="view==0" class="container text-center">
-          <button ng-click="reset()">Reset</button> 
           <button ng-click="export(format)">Export</button>
         </div>
       </div>
@@ -174,6 +177,13 @@
         <div ng-if="view==1" infinite-scroll="moreExplore()" infinite-scroll-distance="1" infinite-scroll-use-document-bottom="true"></div>
         <div ng-if="view==2" infinite-scroll="moreColllections()" infinite-scroll-distance="1" infinite-scroll-use-document-bottom="true"></div>
       </div>
-
+    </div>
+    </div>
+      <div class="panel center" ng-if="view==4">
+        <h1>Trends</h1>
+        <div class="chart-box">
+          <canvas ng-if="view==4" id="myChart" width="400" height="400"></canvas>
+        </div>
+      </div>
   </body>
 </html>
