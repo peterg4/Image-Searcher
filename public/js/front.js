@@ -285,10 +285,12 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
       var titles = [];
       
       for(var i = 0; i < obj.length; i++) {
+        var sublikes = 0;
         for( var j = 0; j < obj[i].data.length; j++) {
-          likes.push(obj[i].data[j].likes);
-          titles.push(obj[i].data[j].tags[0].title);
+          sublikes += obj[i].data[j].likes;
         }
+        likes.push(sublikes);
+        titles.push(obj[i].data[0].tags[0].title);
       }
       console.log(likes);
       console.log(titles);
@@ -298,7 +300,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
         data: {
           labels: titles,
           datasets: [{
-              label: 'Most Liked Pix',
+              label: 'Most Liked Pix by Tag',
               backgroundColor: 'rgb(255, 99, 132)',
               borderColor: 'rgb(255, 99, 132)',
               data: likes,
@@ -314,7 +316,7 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
             }],
             xAxes: [{
               ticks: {
-                  display: false 
+                  display: true
               }
             }]
           }
