@@ -361,11 +361,13 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
           responsive: true,
           scales: {
             yAxes: [{
+              label: 'Year Updated',
               ticks: {
                 beginAtZero: true
               }
             }],
             xAxes: [{
+              label: 'Year Created',
               ticks: {
                   display: true
               }
@@ -391,13 +393,20 @@ app.controller("controller", ['$scope','$http',function($scope, $http) {
           scales: {
             yAxes: [{
               ticks: {
-                beginAtZero: false
+                stepSize: 1,
+                suggestedMax: 2022,
+                suggestedMin: 2016,
+                beginAtZero: false,
+                label: 'Date Updated'
               }
             }],
             xAxes: [{
               ticks: {
-                  beginAtZero: false,
-                  display: true
+                stepSize: 1,
+                suggestedMax: 2022,
+                suggestedMin: 2016,
+                beginAtZero: false,
+                display: true
               }
             }]
           }
