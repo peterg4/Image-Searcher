@@ -4,6 +4,7 @@ Features:	login/user system
 		explore trending photos
 		explore trending collections of photos
 		infinite scroll on all pages	
+		Stores results of all searches in Atlas DB
 
 Difficult things: Setting up the initial connection to MongoDB Atlas/learning the functionality
 		  Exporting the data to CSV
